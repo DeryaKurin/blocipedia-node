@@ -5,7 +5,8 @@
     "database": "blocipedia-dev",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "logging": false
+    "logging": false,
+    "operatorsAliases": false
   },
   "test": {
     "username": "postgres",
@@ -13,7 +14,8 @@
     "database": "blocipedia-test",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "logging": false
+    "logging": false,
+    "operatorsAliases": false
   },
   "production": {
     "username": "postgres",
