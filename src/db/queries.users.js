@@ -20,6 +20,8 @@ module.exports = {
     .catch((err) => {
       callback(err);
     })
-  }
+  },
+
+  // get user by email
 
 }

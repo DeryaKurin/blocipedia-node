@@ -10,9 +10,9 @@ module.exports = {
     const errors = req.validationErrors();
 
     if (errors) {
-      console.log(errors);
+       // console.log(errors);
        req.flash("error", errors);
-       return res.redirect(req.headers.referer);
+       return res.redirect(303, req.headers.referer);
      } else {
        return next();
      }
