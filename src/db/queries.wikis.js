@@ -1,7 +1,41 @@
-const User = require("./models").Post;
+const User = require("./models").User;
 const Wiki = require("./models").Wiki;
 
 module.exports = {
+  getAllWikis(callback) {
+    return Wiki.all()
+    .then((wikis) => {
+      callback(null, wikis);
+    })
+    .catch((err) => {
+      callback(err);
+    });
+  },
+
+  getWiki(id, callback) {
+    return Wiki.findById(id)
+    .then((wiki) => {
+      callback(null, wiki);
+    })
+    .catch((err) => {
+      callback(err);
+    });
+  },
+
+  // getWiki(id, callback) {
+  //   return Wiki.findById(id, {
+  //     include: [
+  //       {model: User, as: "wikis"}
+  //     ]
+  //   })
+  //   .then((wiki) => {
+  //     callback(null, wiki);
+  //   })
+  //   .catch((err) => {
+  //     callback(err);
+  //   });
+  // },
+
   addWiki(newWiki, callback) {
     return Wiki.create(newWiki)
     .then((wiki) => {
@@ -12,19 +46,7 @@ module.exports = {
     })
   },
 
-  getWiki(id, callback) {
-    return Wiki.findById(id, {
-      include: [
-        {model: User, as: "wikis"}
-      ]
-    })
-    .then((wiki) => {
-      callback(null, wiki);
-    })
-    .catch((err) => {
-      callback(err);
-    });
-  },
+
 
   deleteWiki(req, callback) {
     return Wiki.findById(req.params.id)
@@ -46,13 +68,13 @@ module.exports = {
 
   updateWiki(req, updatedWiki, callback) {
     return Wiki.findById(req.params.id)
-    .then((post) => {
+    .then((wiki) => {
       if(!wiki) {
         return callback("Wiki not found");
       }
       if(req.user) {
         wiki.update(updatedWiki, {
-          fields: Object.keys(updatedPost)
+          fields: Object.keys(updatedWiki)
         })
         .then(() => {
           callback(null, wiki);
@@ -64,6 +86,6 @@ module.exports = {
         req.flash("notice", "You are not authorized to do that.");
         callback("Forbidden");
       }
-    })
+    });
   }
 }
