@@ -7,6 +7,7 @@ const validation = require("./validation");
 const helper = require("../auth/helpers");
 
 
+router.get("/wikis", wikiController.index);
 
 router.get("/wikis/new", wikiController.new);
 
