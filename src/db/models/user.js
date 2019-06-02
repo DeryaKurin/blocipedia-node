@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isEmail: {
           msg: "must be a valid email"
-        }      
+        }
       }
     },
     password: {
@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function(models) {
     // associations can be defined here
+    User.hasMany(models.Wiki, {
+      foreignKey: "userId",
+      as: "wikis"
+    });
   };
 
   return User;
