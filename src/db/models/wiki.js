@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allownull: false
     },
-    private: DataTypes.BOOLEAN,
+    private: {
+      type: DataTypes.BOOLEAN,
+      allownull: false
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false
