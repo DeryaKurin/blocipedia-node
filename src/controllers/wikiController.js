@@ -14,15 +14,6 @@ module.exports = {
     });
   },
 
-  // new(req, res, next) {
-  //   if(req.userId) {
-  //     res.render("wikis/new");
-  //   } else {
-  //     req.flash("notice", "You are not authorized to do that.");
-  //     res.redirect("/wikis");
-  //   }
-  // },
-
   new (req, res, next) {
     res.render("wikis/new");
   },
