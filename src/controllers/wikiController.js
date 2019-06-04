@@ -14,17 +14,21 @@ module.exports = {
     });
   },
 
-  new(req, res, next) {
-    if(req.userId) {
-      res.render("wikis/new");
-    } else {
-      req.flash("notice", "You are not authorized to do that.");
-      res.redirect("/wikis");
-    }
+  // new(req, res, next) {
+  //   if(req.userId) {
+  //     res.render("wikis/new");
+  //   } else {
+  //     req.flash("notice", "You are not authorized to do that.");
+  //     res.redirect("/wikis");
+  //   }
+  // },
+
+  new (req, res, next) {
+    res.render("wikis/new");
   },
 
   create(req, res, next) {
-    if(req.user) {
+
       let newWiki = {
         title: req.body.title,
         body: req.body.body,
@@ -34,15 +38,13 @@ module.exports = {
 
       wikiQueries.addWiki(newWiki, (err, wiki) => {
         if(err) {
-          res.redirect(500, "/wikis/new");
+          req.flash("error", err);
+          res.redirect("/wikis/new");
         } else {
-          res.redirect(303, `/wikis/${wiki.id}`);
+          res.redirect(`/wikis/${wiki.id}`);
         }
       });
-    } else {
-      req.flash("notice", "You are not authorized to do that.");
-       res.redirect("/wikis");
-    }
+
   },
 
   show(req, res, next) {

@@ -3,7 +3,7 @@ const Wiki = require("./models").Wiki;
 
 module.exports = {
   getAllWikis(callback) {
-    return Wiki.all()
+    return Wiki.findAll()
     .then((wikis) => {
       callback(null, wikis);
     })
@@ -22,19 +22,7 @@ module.exports = {
     });
   },
 
-  // getWiki(id, callback) {
-  //   return Wiki.findById(id, {
-  //     include: [
-  //       {model: User, as: "wikis"}
-  //     ]
-  //   })
-  //   .then((wiki) => {
-  //     callback(null, wiki);
-  //   })
-  //   .catch((err) => {
-  //     callback(err);
-  //   });
-  // },
+
 
   addWiki(newWiki, callback) {
     return Wiki.create(newWiki)
@@ -42,6 +30,7 @@ module.exports = {
       callback(null, wiki);
     })
     .catch((err) => {
+      console.log(err);
       callback(err);
     })
   },
