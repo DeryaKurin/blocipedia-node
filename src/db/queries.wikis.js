@@ -13,7 +13,7 @@ module.exports = {
   },
 
   getWiki(id, callback) {
-    return Wiki.findByPk(id)
+    return Wiki.findById(id)
     .then((wiki) => {
       console.log(wiki);
       callback(null, wiki);
