@@ -13,6 +13,7 @@ module.exports = {
   },
 
   getWiki(id, callback) {
+    console.log("LOOK AT HERE:" + id);
     return Wiki.findById(id)
     .then((wiki) => {
       console.log(wiki);

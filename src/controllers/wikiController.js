@@ -39,7 +39,7 @@ module.exports = {
   },
 
   show(req, res, next) {
-  
+
     wikiQueries.getWiki(req.params.id, (err, wiki) => {
       if(err || wiki == null) {
         console.log(err);
@@ -62,16 +62,13 @@ module.exports = {
   },
 
   edit(req, res, next) {
-    wikiQueries.getWiki(req, (err, wiki) => {
+    wikiQueries.getWiki(req.params.id, (err, wiki) => {
       if(err || wiki == null) {
         res.redirect(404, "/");
       } else {
-        if(req.userId) {
+
           res.render("wikis/edit", {wiki});
-        } else {
-          req.flash("notice", "You are not authorized to do that.");
-          res.redirect(500, `/wikis/${req.params.id}`);
-        }
+      
       }
     });
   },
