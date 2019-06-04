@@ -13,11 +13,13 @@ module.exports = {
   },
 
   getWiki(id, callback) {
-    return Wiki.findById(id)
+    return Wiki.findByPk(id)
     .then((wiki) => {
+      console.log(wiki);
       callback(null, wiki);
     })
     .catch((err) => {
+      console.log(err);
       callback(err);
     });
   },

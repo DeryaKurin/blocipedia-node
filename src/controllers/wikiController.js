@@ -39,10 +39,13 @@ module.exports = {
   },
 
   show(req, res, next) {
-    wikiQueries.getWiki(req.params.id, (err,wiki) => {
+  
+    wikiQueries.getWiki(req.params.id, (err, wiki) => {
       if(err || wiki == null) {
+        console.log(err);
         res.redirect(404, "/");
       } else {
+        console.log(wiki);
         res.render("wikis/show", {wiki});
       }
     });
