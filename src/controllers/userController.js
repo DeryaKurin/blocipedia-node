@@ -1,6 +1,6 @@
 const userQueries = require("../db/queries.users.js");
 const passport = require("passport");
-const User = require("../db/models/").User;
+// const User = require("../db/models/").User;
 
 
 module.exports = {
@@ -47,7 +47,7 @@ module.exports = {
 
    signIn(req, res, next) {
      passport.authenticate("local")(req, res, function () {
-       if(!req.user){
+       if(!req.user) {
          req.flash("notice", "Sign in failed. Please try again.")
          res.redirect("/users/signin");
        } else {

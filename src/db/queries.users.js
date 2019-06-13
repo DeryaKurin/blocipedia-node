@@ -11,7 +11,7 @@ module.exports = {
     return User.create({
       username: newUser.username,
       email: newUser.email,
-      password: hashedPassword
+      password: hashedPassword,
     })
     .then((user) => {
 
@@ -23,5 +23,20 @@ module.exports = {
   },
 
   // get user by email
+  getUser(id, callback) {
+    let result = {};
+    User.finById(id)
+    .then((user) => {
+      if(!user) {
+        callback(404);
+      } else {
+        result["user"] = user;
+        callback(null, results);
+      }
+     })
+     .catch((err) => {
+       callback(err);
+     })
+   }
 
 }

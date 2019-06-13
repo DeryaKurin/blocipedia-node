@@ -17,6 +17,7 @@ module.exports = {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(express.static(path.join(__dirname, "..", "assets")));
     app.use(expressValidator());
+    app.use(logger('dev'));
     app.use(session({
       secret: process.env.cookieSecret,
       resave: false,
@@ -30,6 +31,5 @@ module.exports = {
         res.locals.currentUser = req.user;
         next();
     });
-    app.use(logger('dev'));
   }
 };
