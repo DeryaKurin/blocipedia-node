@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <% include ../static/partials/head.ejs %>
+
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+      <% include ../static/partials/messages.ejs %>
+
+      <h1>Upgrade to a Premium Membership</h1>
+      <div>
+        <form action="/users/upgrade" method="POST">
+          <script
+           src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+           data-key= "<% process.env.STRIPE_PUBLISHABLE_KEY %>"
+           data-amount="15"
+           data-name="Blocipedia"
+           data-description="Premium Membership Fee"
+           data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+           data-locale="auto">
+          </script>
+        </form>
+      </div>
+
+      <small class="muted-text">Premium memberships are charged a recurring payment of $15 per year.</small>
+       </main>
+
+       <% include ../static/partials/baseScripts.ejs %>
+
+     </body>
+   </html>

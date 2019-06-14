@@ -1,4 +1,5 @@
 const User = require("./models").User;
+const Wiki = require("./models").Wiki;
 const bcrypt = require("bcryptjs");
 
 
@@ -24,19 +25,56 @@ module.exports = {
 
   // get user by email
   getUser(id, callback) {
-    let result = {};
-    User.finById(id)
+    return User.findById(id
+    //   , {
+    //   include: [
+    //     { model : Wiki }
+    //   ]
+    // }
+  )
     .then((user) => {
-      if(!user) {
-        callback(404);
-      } else {
-        result["user"] = user;
-        callback(null, results);
-      }
-     })
-     .catch((err) => {
-       callback(err);
-     })
-   }
+      callback(null, user);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+   },
 
+   upgradeUser(id, callback) {
+     return User.findById(id)
+     .then((user) => {
+       if (!user) {
+         return callback("User not found!");
+       } else {
+         user.update({
+           role: 1
+         })
+         .then((user) => {
+           callback(null, user);
+         })
+         .catch((err) => {
+           callback(err);
+         });
+       }
+     });
+   },
+
+   downgradeUser(id, callback) {
+     return User.findById(id)
+     .then((user) => {
+       if(!user) {
+         return callback("User not found!");
+       } else {
+         user.update({
+           role: 0
+         })
+         .then((user) => {
+           callback(null, user);
+         })
+         .catch((err) => {
+           callback(err);
+         });
+       }
+     });
+   }
 }

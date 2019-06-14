@@ -11,26 +11,25 @@
 
       <% include ../static/partials/messages.ejs %>
 
-      <h1><%= `${user.email}'s profile` %></h1>
+      <h4><%= `${user.username}'s profile` %></h4>
 
       <hr>
 
-      <h2 style="margin-top: 2rem;"> Latest Posts</h2>
+      <h2 style="margin-top: 2rem;"> All Wikis</h2>
 
-      <ul class="list-unstyled">
 
-        <% if(wikis) { %>
-          <% wikis.forEach((wiki) => { %>
-            <li>
-              <a href="/wikis/<%= wiki.id %>">
-                <%= wiki.title %>
-              </a>
-            </li>
-          <% }) %>
-        <% } else { %>
-          <p>You haven't collaborated on any wikis yet.</p>
-          <% } %>
-      </ul>
+     <p>Add all the wikis of this user here</p>
+
+     <% if(currentUser && currentUser.role == 0) {%>
+       <li>
+         <a href="/users/upgradeForm.ejs">Upgrade to Premium</a>
+       </li>
+    <% } %>
+     <% if (currentUser && currentUser.role == 1) { %>
+      <li>
+        <a href="/users/downgradeForm">Downgrade to Standard</a>
+      </li>
+    <% } %>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
