@@ -35,7 +35,7 @@ module.exports = {
 
    toggleUser(user, callback) {
      User.findOne({
-  where: { email: req.user.email }
+  where: { email: user.email }
 }).then(user => {
   if (user.role == 0) {
     user
