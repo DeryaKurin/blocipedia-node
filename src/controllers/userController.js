@@ -116,7 +116,7 @@ module.exports = {
          res.redirect("/wikis");
        } else {
          req.flash("notice", "Upgrade unsuccessful.");
-         res.redirect("/users/show");
+         res.render("users/show", {user});
        }
      })
    },
@@ -147,7 +147,7 @@ module.exports = {
        } else {
          console.log(user);
          req.flash("notice", "Downgrade unsuccessful.");
-         res.redirect("users/show", {user});
+         res.render("users/show", {user});
        }
      });
    }
