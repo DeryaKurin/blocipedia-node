@@ -11,23 +11,32 @@
 
       <% include ../static/partials/messages.ejs %>
 
-      <h4><%= `${user.username}'s profile` %></h4>
+      <h4><%= `${currentUser.username}'s Profile` %></h4>
+      <h6><%= `Email: ${currentUser.email}` %></h6>
+
+       <% if(currentUser.role == 0) {%>
+          <p>Membership Status: Standard</a>
+       <% } else if (currentUser.role == 1) { %>
+          <p>Membership Status: Premium</a>
+       <% } else { %>
+          <p>Membership Status: Admin</a>
+       <% } %>
+
 
       <hr>
 
-      <h2 style="margin-top: 2rem;"> All Wikis</h2>
-
-
-     <p>Add all the wikis of this user here</p>
+      <!-- <h2 style="margin-top: 2rem;"> All Wikis</h2> -->
 
      <% if(currentUser && currentUser.role == 0) {%>
-       <li>
-         <a href="/users/upgradeForm.ejs">Upgrade to Premium</a>
-       </li>
-    <% } %>
+       <h1>Join Blocipedia as a premium member.</h1>
+				<ul>
+					<li>Create private wikis and collaborate with other premium members.</li>
+				</ul>
+        <a href="/users/<%= user.id %>/upgrade" class="btn btn-warning">Upgrade to Premium</a>
+     <% } %>
      <% if (currentUser && currentUser.role == 1) { %>
       <li>
-        <a href="/users/downgradeForm">Downgrade to Standard</a>
+        <a href="/users/<%= user.id %>/downgrade">Downgrade to Standard</a>
       </li>
     <% } %>
     </main>

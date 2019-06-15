@@ -23,15 +23,8 @@ module.exports = {
     })
   },
 
-  // get user by email
   getUser(id, callback) {
-    return User.findById(id
-    //   , {
-    //   include: [
-    //     { model : Wiki }
-    //   ]
-    // }
-  )
+    return User.findById(id)
     .then((user) => {
       callback(null, user);
     })
@@ -40,39 +33,57 @@ module.exports = {
     })
    },
 
-   upgradeUser(id, callback) {
-     return User.findById(id)
+   // upgrade(id, callback) {
+   //   return User.findById(id)
+   //   .then((user) => {
+   //     if (!user) {
+   //       return callback("User not found!");
+   //     } else {
+   //       user.updateAttributes({
+   //         role: 1
+   //       })
+   //       .then((user) => {
+   //         callback(null, user);
+   //       })
+   //       .catch((err) => {
+   //         callback(err);
+   //       });
+   //     }
+   //   });
+   // },
+   //
+   // downgrade(id, callback) {
+   //   return User.findById(id)
+   //   .then((user) => {
+   //     if(!user) {
+   //       return callback("User not found!");
+   //     } else {
+   //       user.updateAttributes({
+   //         role: 0
+   //       })
+   //       .then((user) => {
+   //         callback(null, user);
+   //       })
+   //       .catch((err) => {
+   //         callback(err);
+   //       });
+   //     }
+   //   });
+   // }
+
+   toggleUser(user) {
+     User.findOne({
+       where: { email: user.email }
+     })
      .then((user) => {
-       if (!user) {
-         return callback("User not found!");
-       } else {
+       if(user.role == 0) {
          user.update({
            role: 1
-         })
-         .then((user) => {
-           callback(null, user);
-         })
-         .catch((err) => {
-           callback(err);
          });
        }
-     });
-   },
-
-   downgradeUser(id, callback) {
-     return User.findById(id)
-     .then((user) => {
-       if(!user) {
-         return callback("User not found!");
-       } else {
+       if (user.role == 1){
          user.update({
            role: 0
-         })
-         .then((user) => {
-           callback(null, user);
-         })
-         .catch((err) => {
-           callback(err);
          });
        }
      });

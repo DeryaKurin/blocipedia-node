@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <% include partials/head.ejs %>
+    <% include ../static/partials/head.ejs %>
   </head>
   <body>
 
-  	<% include partials/navbar.ejs %>
+  	<% include ../static/partials/navbar.ejs %>
 
   	<main class="container">
 
@@ -17,8 +17,8 @@
 
    <div class="row">
      <div class="col-md-8">
-       <form method="POST" action="users/downgrade">
-         <input type="submit" value="downgrade" class="btn btn-primary"/>
+       <form action="users/<%=user.id %>/downgrade" method="POST">
+         <button type="submit" value="downgrade" class="btn btn-primary">Confirm account downgrade</button>
        </form>
      </div>
    </div>
@@ -26,6 +26,6 @@
 
   	</main>
 
-    <% include partials/baseScripts.ejs %>
+    <% include ../static/partials/baseScripts.ejs %>
    </body>
 </html>
