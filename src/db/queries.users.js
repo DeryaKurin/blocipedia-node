@@ -33,21 +33,28 @@ module.exports = {
     })
    },
 
-   toggleUser(user) {
+   toggleUser(user, callback) {
      User.findOne({
-       where: { email: user.email }
-     })
-     .then((user) => {
-       if(user.role == 0) {
-         user.update({
-           role: 1
-         });
-       }
-       if (user.role == 1){
-         user.update({
-           role: 0
-         });
-       }
-     });
+  where: { email: req.user.email }
+}).then(user => {
+  if (user.role == 0) {
+    user
+      .update({
+        role: 1
+      })
+      .then(user => {
+        callback(null, user);
+      });
+  } else if (user.role == 1) {
+    user
+      .update({
+        role: 0
+      })
+      .then(user => {
+        callback(null, user);
+      });
+  }
+});
    }
+
 }

@@ -95,37 +95,39 @@ module.exports = {
    },
 
    upgrade(req, res, next) {
-     const token = req.body.stripeToken;
-     const email = req.body.stripeEmail;
-
-     User.findOne ({
-       where: {email: email}
-     })
-     .then((user) => {
-       stripe.customers.create({
-          email: req.body.stripeEmail,
-          source: req.body.stripeToken
-        })
-          .then(customer =>
-            stripe.charges.create({
-              amount: 1500,
-              description: "Blocipedia Account Upgrade Charge",
-              currency: "usd",
-              customer: customer.id
-            }))
-       .then(charge =>
-        res.render("users/upgradeSuccess"))
-       .then((result) => {
-       if(result) {
-         console.log(result);
-         userQueries.toggleUser(user);
-         req.flash("notice", "Congrats! Upgrade successful!");
-         res.redirect("/wikis");
-       } else {
-         req.flash("notice", "Upgrade unsuccessful.");
-         res.render("users/show", { user });
-       }
-     })
+     User.findOne({
+    where: { email: req.user.email }
+  })
+  .then(user => {
+    stripe.customers
+      .create({
+        email: req.body.stripeEmail,
+        source: req.body.stripeToken
+      })
+      .then(customer => {
+        stripe.charges
+          .create({
+            amount: 1500,
+            description: "Blocipedia Account Upgrade Charge - TC",
+            currency: "usd",
+            customer: customer.id
+          })
+          .then(charge => {
+              console.log("CHARGE:", charge);
+              userQueries.toggleUser(user, (err, user) => {
+                if (err | user == null) {
+                req.flash("notice", "No user found with that ID.");
+                res.render("/wikis");
+                } else if (user.role == 1) {
+                res.render("users/upgradeSuccess", {user});
+                }
+            });
+          });
+      });
+  })
+  .catch(err => {
+    res.redirect(500, "/");
+  });
    },
 
    showDowngradePage(req, res, next) {
@@ -154,7 +156,7 @@ module.exports = {
        } else {
          console.log(user);
          req.flash("notice", "Downgrade unsuccessful.");
-         res.render("users/show", { user });
+         res.render("users/show", {user});
        }
      });
    }
