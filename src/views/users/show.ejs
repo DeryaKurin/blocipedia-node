@@ -32,7 +32,7 @@
 				<ul>
 					<li>Create private wikis and collaborate with other premium members.</li>
 				</ul>
-        <a href="/users/<%= user.id %>/upgrade" class="btn btn-warning">Upgrade to Premium</a>
+        <a href="/users/<%=user.id %>/upgrade" class="btn btn-warning">Upgrade to Premium</a>
      <% } %>
      <% if (currentUser && currentUser.role == 1) { %>
       <li>

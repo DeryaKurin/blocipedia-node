@@ -3,8 +3,9 @@ const passport = require("passport");
 const User = require("../db/models/").User;
 //Test mode Stripe API Keys
 const secretKey = process.env.STRIPE_SECRET_KEY;
-const publishableKey = process.env.STRIPE_SECRET_KEY;
-const stripe = require("stripe")(publishableKey);
+const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
+const stripe = require("stripe")(secretKey);
+
 
 
 
@@ -102,10 +103,10 @@ module.exports = {
      })
      .then((user) => {
        const charge = stripe.charges.create({
-         amount: 15,
+         amount: 1500,
          currency: 'usd',
-         description: 'Upgrade to Premium Membership',
-         source: token,
+         source: 'tok_visa',
+         receipt_email: 'jenny.rosen@example.com'
        });
      })
      .then((result) => {
@@ -115,7 +116,7 @@ module.exports = {
          res.redirect("/wikis");
        } else {
          req.flash("notice", "Upgrade unsuccessful.");
-         res.redirect("users/show");
+         res.redirect("/users/show");
        }
      })
    },

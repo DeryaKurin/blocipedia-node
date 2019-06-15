@@ -33,44 +33,6 @@ module.exports = {
     })
    },
 
-   // upgrade(id, callback) {
-   //   return User.findById(id)
-   //   .then((user) => {
-   //     if (!user) {
-   //       return callback("User not found!");
-   //     } else {
-   //       user.updateAttributes({
-   //         role: 1
-   //       })
-   //       .then((user) => {
-   //         callback(null, user);
-   //       })
-   //       .catch((err) => {
-   //         callback(err);
-   //       });
-   //     }
-   //   });
-   // },
-   //
-   // downgrade(id, callback) {
-   //   return User.findById(id)
-   //   .then((user) => {
-   //     if(!user) {
-   //       return callback("User not found!");
-   //     } else {
-   //       user.updateAttributes({
-   //         role: 0
-   //       })
-   //       .then((user) => {
-   //         callback(null, user);
-   //       })
-   //       .catch((err) => {
-   //         callback(err);
-   //       });
-   //     }
-   //   });
-   // }
-
    toggleUser(user) {
      User.findOne({
        where: { email: user.email }
