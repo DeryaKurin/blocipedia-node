@@ -102,21 +102,28 @@ module.exports = {
        where: {email: email}
      })
      .then((user) => {
-       const charge = stripe.charges.create({
-         amount: 1500,
-         currency: 'usd',
-         source: 'tok_visa',
-         receipt_email: 'jenny.rosen@example.com'
-       });
-     })
-     .then((result) => {
+       stripe.customers.create({
+          email: req.body.stripeEmail,
+          source: req.body.stripeToken
+        })
+          .then(customer =>
+            stripe.charges.create({
+              amount: 1500,
+              description: "Blocipedia Account Upgrade Charge",
+              currency: "usd",
+              customer: customer.id
+            }))
+       .then(charge =>
+        res.render("users/upgradeSuccess"))
+       .then((result) => {
        if(result) {
+         console.log(result);
          userQueries.toggleUser(user);
          req.flash("notice", "Congrats! Upgrade successful!");
          res.redirect("/wikis");
        } else {
          req.flash("notice", "Upgrade unsuccessful.");
-         res.render("users/show", {user});
+         res.render("users/show", { user });
        }
      })
    },
@@ -147,7 +154,7 @@ module.exports = {
        } else {
          console.log(user);
          req.flash("notice", "Downgrade unsuccessful.");
-         res.render("users/show", {user});
+         res.render("users/show", { user });
        }
      });
    }
