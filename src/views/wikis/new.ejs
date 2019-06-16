@@ -24,10 +24,17 @@
         </div>
         <div class="form-group">
           <label for="private">Wiki privacy</label>
-          <select class="form-control" name="private" placeholder="Select Wiki privacy">
-            <option value = "true">Private</option>
-            <option value = "false">Public</option>
-          </select>
+          <% if(currentUser.role == 1 || currentUser.role == 2) { %>
+            <select class="form-control" name="private" placeholder="Select Wiki privacy">
+              <option value = "false">Private</option>
+              <option value = "true">Public</option>
+            </select>
+          <% } else { %>
+            <select class="form-control" name="private" placeholder="Select Wiki privacy">
+              <option value ="true">Public</option>
+            </select>
+          <% } %>
+
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

@@ -110,5 +110,9 @@ module.exports = {
         res.redirect(`/wikis/${req.params.id}`);
       }
     });
+  },
+
+  toggleWikiPrivacy(req, res, next) {
+    
   }
 }

@@ -89,5 +89,9 @@ module.exports = {
         callback("Forbidden");
       }
     });
-  }
+  },
+
+  // toggleWiki(wikis, callback) {
+  //
+  // }
 }

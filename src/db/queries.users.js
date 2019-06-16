@@ -36,7 +36,7 @@ module.exports = {
    toggleUser(user, callback) {
      User.findOne({
   where: { email: user.email }
-}).then(user => {
+  }).then(user => {
   if (user.role == 0) {
     user
       .update({
@@ -53,8 +53,8 @@ module.exports = {
       .then(user => {
         callback(null, user);
       });
-  }
-});
+      }
+    });
    }
 
 }
