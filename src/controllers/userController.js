@@ -1,4 +1,5 @@
 const userQueries = require("../db/queries.users.js");
+const wikiQueries = require("../db/queries.wikis.js");
 const passport = require("passport");
 const User = require("../db/models/").User;
 //Test mode Stripe API Keys
@@ -146,11 +147,12 @@ module.exports = {
 
    downgrade(req, res, next) {
      User.findOne({
-       where: {id: req.params.id}
+       where: { id: req.params.id }
      })
      .then((user) => {
        if(user) {
          userQueries.toggleUser(user);
+         wikiQueries.privateToPublic(req.user.id);
          req.flash("notice", "Your downgrade was successful!");
          res.redirect("/wikis");
        } else {
@@ -160,6 +162,4 @@ module.exports = {
        }
      });
    }
-
-
 }

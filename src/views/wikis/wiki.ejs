@@ -20,6 +20,7 @@
            <% if(wiki.private == false) { %>
               <li>
                 <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+                <p>Wiki privacy: <%= wiki.private ? "private" : "public"; %></p>
               </li>
            <% } %>
          <% }); %>
@@ -28,6 +29,7 @@
         <% wikis.forEach((wiki) => { %>
            <li>
              <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+             <p>Wiki privacy: <%= wiki.private ? "private" : "public"; %></p>
            </li>
           <% }); %>
       <% } %>

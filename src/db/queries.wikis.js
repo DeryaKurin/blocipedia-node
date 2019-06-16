@@ -91,7 +91,23 @@ module.exports = {
     });
   },
 
-  // toggleWiki(wikis, callback) {
-  //
-  // }
+
+  privateToPublic(id, callback) {
+    Wiki.findAll()
+    .then((wikis) => {
+      wikis.forEach((wiki) => {
+        if(wiki.userId == id && wiki.private == true) {
+          wiki.update({
+            private: false
+          })
+        }
+      })
+    })
+    .then((wikis) => {
+      callback(null, wikis);
+    })
+    .catch((err) => {
+      callback(err);
+    });
+  }
 }
