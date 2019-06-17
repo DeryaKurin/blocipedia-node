@@ -35,11 +35,11 @@ module.exports = {
 
    toggleUser(user, callback) {
      User.findOne({
-  where: { email: user.email }
-  }).then(user => {
-  if (user.role == 0) {
-    user
-      .update({
+       where: { email: user.email }
+     })
+     .then(user => {
+       if (user.role == 0) {
+       user.update({
         role: 1
       })
       .then(user => {
