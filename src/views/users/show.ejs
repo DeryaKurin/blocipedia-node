@@ -14,9 +14,9 @@
       <h4><%= `${currentUser.username}'s Profile` %></h4>
       <h6><%= `Email: ${currentUser.email}` %></h6>
 
-       <% if(currentUser.role == 0) {%>
+       <% if(currentUser.isStandard()) {%>
           <p>Membership Status: Standard</a>
-       <% } else if (currentUser.role == 1) { %>
+       <% } else if (currentUser.isPremium()) { %>
           <p>Membership Status: Premium</a>
        <% } else { %>
           <p>Membership Status: Admin</a>
@@ -27,14 +27,14 @@
 
       <!-- <h2 style="margin-top: 2rem;"> All Wikis</h2> -->
 
-     <% if(currentUser && currentUser.role == 0) {%>
+     <% if(currentUser && currentUser.isStandard()) {%>
        <h1>Join Blocipedia as a premium member.</h1>
 				<ul>
 					<li>Create private wikis and collaborate with other premium members.</li>
 				</ul>
         <a href="/users/<%=user.id %>/upgrade" class="btn btn-warning">Upgrade to Premium</a>
      <% } %>
-     <% if (currentUser && currentUser.role == 1) { %>
+     <% if (currentUser && currentUser.isPremium()) { %>
       <li>
         <a href="/users/<%= user.id %>/downgrade">Downgrade to Standard</a>
       </li>

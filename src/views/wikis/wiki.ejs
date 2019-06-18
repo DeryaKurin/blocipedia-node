@@ -13,27 +13,48 @@
       <% if (currentUser) { %>
            <a href="/wikis/new" class="btn btn-success">New Wiki</a>
       <% } %>
-      <ul class="list-group">
-      <% if (currentUser.role == 0) { %>
+
+
+      <% if (currentUser && currentUser.isStandard()) { %>
+        <hr>
+        <h6>Public Wikis:</h6>
 
          <% wikis.forEach((wiki) => { %>
-           <% if(wiki.private == false) { %>
+           <% if(wiki.isPublic()) { %>
+             <ul class="list-group">
               <li>
                 <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
-                <p>Wiki privacy: <%= wiki.private ? "private" : "public"; %></p>
               </li>
+              </ul>
            <% } %>
          <% }); %>
 
-      <% } else if (currentUser.role == 1 || currentUser.role == 2) { %>
+      <% } else if (currentUser.isPremium()|| currentUser.isAdmin()) { %>
+
         <% wikis.forEach((wiki) => { %>
-           <li>
-             <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
-             <p>Wiki privacy: <%= wiki.private ? "private" : "public"; %></p>
-           </li>
+        <%  if(wiki.isPublic()) { %>
+
+
+          <ul class="list-group">
+            <li>
+              <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+            </li>
+          </ul>
+
+        <%  } else if (wiki.isPrivate()) { %>
+
+
+          <ul class="list-group">
+            <li>
+              <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a><span>Private</span>
+            </li>
+          </ul>
+           <% } %>
           <% }); %>
       <% } %>
-      </ul>
+
+
+
    </main>
   <% include ../static/partials/baseScripts.ejs %>
   </body>

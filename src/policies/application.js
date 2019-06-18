@@ -9,8 +9,12 @@ module.exports = class ApplicationPolicy {
     return this.record && this.record.private;
   }
 
+  _isPublic() {
+    return this.record && !this.record.private;
+  }
+
   _isOwner() {
-    return this.record && (this.record.userId == this.user.id);
+    return this.record && this.user && (this.record.userId == this.user.id);
   }
 
   _isAdmin() {

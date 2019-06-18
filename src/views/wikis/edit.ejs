@@ -12,7 +12,7 @@
       <h1>Edit Wiki</h1>
 
       <form action="/wikis/<%= wiki.id %>/update" method="post">
-        
+
         <div class="form-group">
           <label for="title">Wiki title</label>
           <input value="<%= wiki.title %>" type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter Title">
@@ -41,6 +41,14 @@
 
         <button type="submit" class="btn btn-primary">Update</button>
       </form>
+      <hr>
+      <% if(wiki.isPrivate()) { %>
+        <% if(currentUser && currentUser.isOwner(wiki) || (currentUser && currentUser.isAdmin())) { %>
+          <a href="/wikis/<%= wiki.id %>/collaborators" class="btn btn-info">Edit Collaborators</a>
+        <% } %>
+      <% } %>
+
+
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>

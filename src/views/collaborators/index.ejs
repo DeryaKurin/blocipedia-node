@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./partials/head.ejs %>
+</head>
+  <body>
+
+  <% include ./partials/navbar.ejs %>
+
+      <main class="container">
+
+      <% include ../static/partials/messages.ejs %>
+
+      <h4>Collaborators</h4>
+      <hr>
+      <ul class="list-group">
+      <% if(currentUser) { %>
+       <% collaborators.forEach((collaborator) => { %>
+           <li class="list-group-item">
+             <a href="/wikis/<%= collaborator.wikiId %>/collaborators/<%= collaborator.id %>"> <%= collaborator.email %> </a>
+           </li>
+        <% }); %>
+       <% } %>
+      </ul>
+      </main>
+
+   <% include ./partials/baseScripts.ejs %>
+    </body>
+</html>
