@@ -1,4 +1,4 @@
-const collaboratorQueries = require("../db/queries.collaborators");
+const collaboratorQueries = require("../db/queries.collaborators.js");
 const Authorizer = require("../policies/wiki");
 
 const User = require("../db/models").User;
