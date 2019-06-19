@@ -112,8 +112,8 @@ module.exports = {
     });
   },
 
-  getAllCollaborators(id, callback) {
-    return Wiki.findByPk(id, {
+  getAllCollaborators(req, callback) {
+    return Wiki.findById(req.params.id, {
       include: [
         { model: Collaborator, as: "collaborators", include: [
           { model: User }
@@ -121,7 +121,7 @@ module.exports = {
       ]
     })
     .then((wiki) => {
-      console.log("LOOK AT HERE:Controller>" + wiki);
+      console.log("LOOK AT HERE:1>" + wiki);
       callback(null, wiki);
     })
     .catch((err) => {

@@ -9,11 +9,12 @@ const Collaborator = require("../db/models").Collaborator;
 
 module.exports = {
   index(req, res, next) {
-    wikiQueries.getAllCollaborators(req.params.id, (err, wiki) => {
-      if (err || req.params.id == null) {
-        res.redirect(404, "/wikis");
+    wikiQueries.getAllCollaborators(req, (err, wiki) => {
+      if (err) {
+        console.log("LOOK AT HERE 3:" + err);
+        res.redirect(404, `/wikis/:${wiki.id}`);
       } else {
-        console.log("LOOK AT HERE:" + wiki);
+        // console.log("LOOK AT HERE:" + wiki);
         res.render("collaborators/index", { wiki });
       }
     });
