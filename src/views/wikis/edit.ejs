@@ -27,7 +27,7 @@
 
         <div class="form-group">
           <label for="private">Wiki privacy</label>
-          <% if(currentUser.role == 1 || currentUser.role == 2) { %>
+          <% if(currentUser.isPremium() || currentUser.isAdmin()) { %>
             <select class="form-control" name="private" placeholder="Select Wiki privacy">
               <option value = "false">Public</option>
               <option value = "true">Private</option>

@@ -65,7 +65,7 @@ module.exports = {
 
     wikiQueries.getWiki(req.params.id, (err, wiki) => {
       if(err || wiki == null) {
-        // console.log(err);
+        console.log(err);
         res.redirect(404, "/");
       } else {
         const htmlText = markdown.toHTML(wiki.body);

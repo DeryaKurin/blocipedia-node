@@ -1,5 +1,6 @@
 const User = require("./models").User;
 const Wiki = require("./models").Wiki;
+const Collaborator = require("./models").Collaborator;
 const Authorizer = require("../policies/wiki");
 
 
@@ -107,6 +108,24 @@ module.exports = {
       callback(null, wikis);
     })
     .catch((err) => {
+      callback(err);
+    });
+  },
+
+  getAllCollaborators(id, callback) {
+    return Wiki.findByPk(id, {
+      include: [
+        { model: Collaborator, as: "collaborators", include: [
+          { model: User }
+        ]}
+      ]
+    })
+    .then((wiki) => {
+      console.log("LOOK AT HERE:Controller>" + wiki);
+      callback(null, wiki);
+    })
+    .catch((err) => {
+      // console.log(err);
       callback(err);
     });
   }
