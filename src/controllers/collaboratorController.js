@@ -12,7 +12,8 @@ module.exports = {
     wikiQueries.getAllCollaborators(req, (err, wiki) => {
       if (err) {
         console.log("LOOK AT HERE 3:" + err);
-        res.redirect(404, `/wikis/:${wiki.id}`);
+        debugger;
+        res.redirect(404, `/wikis/${wiki.id}`);
       } else {
         // console.log("LOOK AT HERE:" + wiki);
         res.render("collaborators/index", { wiki });
