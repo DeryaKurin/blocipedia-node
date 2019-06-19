@@ -15,8 +15,8 @@
       <hr>
       <ul class="list-group">
       <% if(currentUser) { %>
-      <%  if(wiki.collaborators) { %>
-          <% wiki.collaborators.forEach((collaborator) => { %>
+      <%  if(collaborators) { %>
+          <% collaborators.forEach((collaborator) => { %>
               <li class="list-group-item">
                 <a href="/wikis/<%= collaborator.wikiId %>/collaborators/<%= collaborator.id %>"> <%= collaborator.email %> </a>
               </li>
