@@ -10,10 +10,10 @@ module.exports = {
     if(authorized) {
       wikiQueries.getAllWikis((err, wikis) => {
         if(err) {
-          console.log(err);
+          // console.log(err);
           res.redirect(500, "static/index");
         } else {
-          console.log(wikis);
+          // console.log(wikis);
           res.render("wikis/wiki", {wikis});
         }
       });
@@ -65,7 +65,7 @@ module.exports = {
 
     wikiQueries.getWiki(req.params.id, (err, wiki) => {
       if(err || wiki == null) {
-        console.log(err);
+        // console.log(err);
         res.redirect(404, "/");
       } else {
         const htmlText = markdown.toHTML(wiki.body);

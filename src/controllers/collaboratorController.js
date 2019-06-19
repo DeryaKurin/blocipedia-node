@@ -6,13 +6,13 @@ const Wiki = require("../db/models").Wiki;
 const Collaborator = require("../db/models").Collaborator;
 
 
-module.export = {
+module.exports = {
   index(req, res, next) {
-    collaboratorQueries.getAllCollaborators((err, collaborators) => {
+    collaboratorQueries.getAllCollaborators(req.body.wikiId, (err, collaborators) => {
       if (err) {
-        console.log("LOOK AT HERE:queries>" + err);
         res.redirect(500, "wikis/wiki");
       } else {
+        console.log("LOOK AT HERE:" + collaborators);
         res.render("collaborators/index", { collaborators });
       }
     });

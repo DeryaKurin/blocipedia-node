@@ -22,11 +22,11 @@ module.exports = {
       ]
     })
     .then((wiki) => {
-      console.log(wiki);
+      // console.log(wiki);
       callback(null, wiki);
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       callback(err);
     });
   },
@@ -38,7 +38,7 @@ module.exports = {
       callback(null, wiki);
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       callback(err);
     })
   },
