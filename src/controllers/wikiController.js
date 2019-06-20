@@ -112,5 +112,41 @@ module.exports = {
         res.redirect(`/wikis/${req.params.id}`);
       }
     });
+  },
+
+  getCollaborators(req, res, next) {
+    wikiQueries.getAllCollaborators(req.params.id, (err, wiki) => {
+      if(err || wiki == null) {
+        res.redirect(500, `/wikis/`);
+      } else {
+        res.render("wikis/collaborators", {wiki});
+      }
+    });
+  },
+
+  addCollaborator(req, res, next) {
+    wikiQueries.addCollaborator(req, (err, collaborator) => {
+      if(err) {
+        req.flash("notice", "Collaborator could not be added this time!");
+        res.redirect(req.headers.referer);
+
+      } else {
+        req.flash("notice", "You have added a new collaborator!");
+        res.redirect(req.headers.referer);
+      }
+    });
+  },
+
+  removeCollaborator(req, res, next) {
+    wikiQueries.removeCollaborator(req, (err, collaborator) => {
+      if(err) {
+        req.flash("notice", "Collaborator could not be removed this time!");
+        res.redirect(req.headers.referer);
+
+      } else {
+        req.flash("notice", "You have successfully removed a collaborator!");
+        res.redirect(req.headers.referer);
+      }
+    })
   }
 }

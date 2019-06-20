@@ -43,8 +43,12 @@
       </form>
       <hr>
       <% if(wiki.isPrivate()) { %>
-        <% if(currentUser && currentUser.isOwner(wiki) || (currentUser && currentUser.isAdmin())) { %> 
-          <a href="/wikis/<%= wiki.id %>/collaborators" class="btn btn-info">Edit Collaborators</a>
+        <% if(currentUser && currentUser.isOwner(wiki) || (currentUser && currentUser.isAdmin())) { %>
+          <form action="/wikis/<%= wiki.id %>/collaborators" method="GET">
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Edit Collaborators</button>
+            </div>
+          </form>
          <% } %>
        <% } %>
 

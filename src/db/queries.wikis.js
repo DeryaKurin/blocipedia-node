@@ -6,7 +6,15 @@ const Authorizer = require("../policies/wiki");
 
 module.exports = {
   getAllWikis(callback) {
-    return Wiki.findAll()
+    return Wiki.findAll({
+      include: [{
+        model: Collaborator,
+        as: "collaborators",
+        include: [{
+          model: User
+        }]
+      }]
+    })
     .then((wikis) => {
       callback(null, wikis);
     })
@@ -18,9 +26,13 @@ module.exports = {
   getWiki(id, callback) {
     console.log("LOOK AT HERE:" + id);
     return Wiki.findById(id, {
-      include: [
-        {model: User}
-      ]
+      include: [{
+        model: Collaborator,
+        as: "collaborators",
+        include: [{
+          model: User
+        }]
+      }]
     })
     .then((wiki) => {
       // console.log(wiki);
@@ -125,6 +137,83 @@ module.exports = {
     })
     .catch((err) => {
       // console.log(err);
+      callback(err);
+    });
+  },
+
+  addCollaborator(req, callback) {
+    return User.findOne({
+      where: {
+        email: req.body.email
+      }
+    })
+    .then((user) => {
+
+      Collaborator.findOne({
+        where: {
+          wikiId: req.params.id,
+          userId: user.id
+        }
+      })
+      .then((result) => {
+        if(result !== null) {
+          req.flash("User is already a collaborator!");
+         } else {
+
+          Collaborator.create({
+            wikiId: req.params.id,
+            userId: user.id
+          })
+          .then((collaborator) => {
+            callback(null, collaborator);
+          })
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        callback(err);
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+
+      callback(err);
+    });
+  },
+
+  removeCollaborator(req, callback) {
+    return User.findOne({
+      where: {
+        email: req.body.email
+      }
+    })
+    .then((user) => {
+      if (!user) {
+        req.flash("notice", "There is no user with the given email!");
+      } else {
+        Collaborator.findOne({
+          where: {
+            wikiId: req.params.id,
+            userId: user.id
+          }
+        })
+        .then((collaborator) => {
+
+          if(!collaborator) {
+            req.flash("notice", "There is no collaborator with the given email!");
+          } else {
+            collaborator.destroy()
+            .then((result) => {
+              callback(null, result);
+            });
+          }
+        })
+        .catch((err) => {
+          callback(err);
+        });
+      }
+    })
+    .catch((err) => {
       callback(err);
     });
   }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ../static/partials/head.ejs %>
+</head>
+  <body>
+
+  <% include ../static/partials/navbar.ejs %>
+
+      <main class="container">
+
+      <% include ../static/partials/messages.ejs %>
+      <hr>
+      <h4>Collaborators for the wiki: <%= wiki.title %></h4>
+      <hr>
+
+     <% if(currentUser) { %>
+          <%  if(wiki.collaborators) { %>
+            <ul class="list-group">
+              <% wiki.collaborators.forEach((collaborator) => { %>
+                <li class="list-group-item">
+                  <%= collaborator.User.email %>
+                </li>
+               <% }); %>
+             </ul>
+          <%  } else { %>
+            <p>You don't have any collaborator for this wiki yet!</p>
+          <% } %>
+        <% } %>
+
+
+
+        <form action="/wikis/<%= wiki.id %>/collaborators/create" method="POST">
+          <div class="form-group">
+            <label for="title">Add Collaborators</label>
+            <input type="email" class="form-control" name="email" aria-describedby="titleHelp" placeholder="Enter Collaborator's Email">
+            <br>
+            <button type="submit" class="btn btn-primary">Add Collaborator</button>
+          </div>
+        </form>
+
+       <hr>
+
+        <form action="/wikis/<%= wiki.id %>/collaborators/destroy" method="POST">
+          <div class="form-group">
+            <label for="title">Remove Collaborators</label>
+            <input type="email" class="form-control" name="email" aria-describedby="titleHelp" placeholder="Enter Collaborator's Email">
+            <br>
+            <button type="submit" class="btn btn-primary">Remove Collaborator</button>
+          </div>
+        </form>
+
+
+      </main>
+
+   <% include ../static/partials/baseScripts.ejs %>
+    </body>
+</html>
