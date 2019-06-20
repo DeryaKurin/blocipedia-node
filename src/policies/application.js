@@ -29,6 +29,10 @@ module.exports = class ApplicationPolicy {
     return this.user && this.user.role == 0; //Standard role will have a value of 0
   }
 
+  _isCollaborator() {
+    return this.record && this.record.Collaborator.userId;
+  }
+
 
   new() {
     return this.user != null;

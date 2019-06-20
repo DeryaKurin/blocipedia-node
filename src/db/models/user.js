@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.prototype.isOwner = function(wiki) {
     return this.id === wiki.userId;
-  }
+  };
 
   return User;
 

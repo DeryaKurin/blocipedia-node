@@ -11,50 +11,59 @@
       <h2>Wikis</h2>
 
       <% if (currentUser) { %>
-           <a href="/wikis/new" class="btn btn-success">New Wiki</a>
+           <a href="/wikis/new" class="btn btn-success">Create a new Wiki</a>
       <% } %>
 
 
-      <% if (currentUser && currentUser.isStandard()) { %>
-        <hr>
+    <div>
+      <br>
         <h6>Public Wikis:</h6>
-
-         <% wikis.forEach((wiki) => { %>
-           <% if(wiki.isPublic()) { %>
-             <ul class="list-group">
-              <li>
-                <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
-              </li>
-              </ul>
-           <% } %>
-         <% }); %>
-
-      <% } else if (currentUser.isPremium()|| currentUser.isAdmin()) { %>
+        <ul class="list-group">
 
         <% wikis.forEach((wiki) => { %>
-        <%  if(wiki.isPublic()) { %>
-
-
-          <ul class="list-group">
-            <li>
-              <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
-            </li>
-          </ul>
-
-        <%  } else if (wiki.isPrivate()) { %>
-
-
-          <ul class="list-group">
-            <li>
-              <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a><span>Private</span>
-            </li>
-          </ul>
-           <% } %>
+          <% if(wiki.isPublic()) { %>
+              <li class="list-group-item">
+                <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+              </li>
+          <% } %>
+        <% }); %>
+        </ul>
+    </div>
+    <div>
+      <% if(currentUser) { %>
+        <br>
+        <h6>Private Wikis:</h6>
+        <% if(currentUser.isStandard()) { %>
+          <p><strong>Upgrade to Premium to create private wikis!</strong></p>
+        <% } %>
+        <ul class="list-group">
+          <% wikis.forEach((wiki) => { %>
+            <% if(wiki.isPrivate()) { %>
+              <% if (currentUser.isPremium() || currentUser.isAdmin()) {  %>
+                  <li class="list-group-item">
+                    <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+                  </li>
+              <% } %>
+            <% } %>
           <% }); %>
+        </ul>
+      </div>
+      <div>
+        <br>
+        <h6>Private Wikis that I collaborate on: </h6>
+        <ul class="list-group">
+           <% wikis.forEach((wiki) => { %>
+             <% wiki.collaborators.forEach((collaborator) => { %>
+               <% if(collaborator.userId == currentUser.id) { %>
+                 <li class="list-group-item">
+                   <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+                 </li>
+               <% } %>
+             <% }) %>
+           <% }) %>
+        </ul>
+        </div>
       <% } %>
-
-
-
    </main>
   <% include ../static/partials/baseScripts.ejs %>
   </body>
