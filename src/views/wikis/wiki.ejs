@@ -8,16 +8,19 @@
       <% include ../static/partials/navbar.ejs %>
       <% include ../static/partials/messages.ejs %>
 
-      <h2>Wikis</h2>
-
-      <% if (currentUser) { %>
-           <a href="/wikis/new" class="btn btn-success">Create a new Wiki</a>
-      <% } %>
+      <br>
+      <img style="height:20rem;" src="/../images/collaboration-1.jpg" alt="A number of words on ideas">
+      <br>
+      <div>
+        <% if (currentUser) { %>
+             <a href="/wikis/new" class="btn btn-success">Start creating a new Wiki</a>
+        <% } %>
+      </div>
 
 
     <div>
       <br>
-        <h6>Public Wikis:</h6>
+        <h6 style="font-style:italic; font-weight:bold;">Public Wikis:</h6>
         <ul class="list-group">
 
         <% wikis.forEach((wiki) => { %>
@@ -32,7 +35,7 @@
     <div>
       <% if(currentUser) { %>
         <br>
-        <h6>Private Wikis:</h6>
+        <h6 style="font-style:italic; font-weight:bold;">Private Wikis:</h6>
         <% if(currentUser.isStandard()) { %>
           <p><strong>Upgrade to Premium to create private wikis!</strong></p>
         <% } %>
@@ -50,7 +53,7 @@
       </div>
       <div>
         <br>
-        <h6>Private Wikis that I collaborate on: </h6>
+        <h6>Private Wikis that I collaborated on: </h6>
         <ul class="list-group">
            <% wikis.forEach((wiki) => { %>
              <% wiki.collaborators.forEach((collaborator) => { %>
